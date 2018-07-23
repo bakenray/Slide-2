@@ -1,21 +1,25 @@
-$('#images > img:nth-child(1)').addClass('current');
-$('#images > img:nth-child(2)').addClass('enter');
-$('#images > img:nth-child(3)').addClass('enter');   
-$('#images > img:nth-child(4)').addClass('enter');
-$('#images > img:nth-child(5)').addClass('enter');
-
-let n = 1;
-setInterval(()=>{
-    $(`#images > img:nth-child(${x(n)})`).removeClass('current').addClass('leave')
+let n;
+initBox(); //初始化
+setInterval(()=>{  //自动播放
+    makeLeave(getImg(n))
     .one('transitionend',(e)=>{
-        $(e.currentTarget).removeClass('leave').addClass('enter')
+        makeEnter($(e.currentTarget))
     })
-
-    $(`#images > img:nth-child(${x(n+1)})`).removeClass('enter').addClass('current');  
+    makeCurrent(getImg(n+1))
     n +=1;
+},3000)
 
-},2000)
+// 按钮事件
+// var allBtns = $('#btnBox button')
+// for(let i=0;i<allBtns.length;i++){ 
+// }
 
+// 封装函数
+function initBox(){
+    n=1
+    $(`#images > img:nth-child(${n})`).addClass('current')
+   .siblings().addClass('enter');
+}
 function x(n){
     if(n>5){
         n = n%5
@@ -25,4 +29,15 @@ function x(n){
     }
     return n
 }
-
+function getImg(n){
+    return $(`#images > img:nth-child(${x(n)})`)
+ }
+ function makeCurrent($node){
+     return $node.removeClass('enter leave').addClass('current');
+ }
+ function makeLeave($node){
+     return $node.removeClass('current enter').addClass('leave')
+ }
+ function makeEnter($node){  
+     return $node.removeClass('leave current').addClass('enter')
+ }
