@@ -1,6 +1,6 @@
 let n;
 initBox(); //初始化
-setInterval(()=>{  //自动播放
+let timer=setInterval(()=>{  //自动播放
     makeLeave(getImg(n))
     .one('transitionend',(e)=>{
         makeEnter($(e.currentTarget))
@@ -8,11 +8,6 @@ setInterval(()=>{  //自动播放
     makeCurrent(getImg(n+1))
     n +=1;
 },3000)
-
-// 按钮事件
-// var allBtns = $('#btnBox button')
-// for(let i=0;i<allBtns.length;i++){ 
-// }
 
 // 封装函数
 function initBox(){
